@@ -1,0 +1,416 @@
+﻿<UserControl x:Class="DietPlanning.Views.MealPlannerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DietPlanning.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.DataContext>
+        <local:MealPlannerViewModel/>
+    </UserControl.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="230"/>
+            <!-- Days List -->
+            <ColumnDefinition Width="*"/>
+            <!-- Meal Plan Details -->
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0"  Background="{StaticResource LisbBoxBackground}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+              
+            <!-- Days List -->
+            <ListBox ItemsSource="{Binding Days}" Background="Transparent"
+                SelectedItem="{Binding SelectedDay}" 
+                Margin="5" Grid.Row="0">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border Background="{Binding IsSelected, Converter={StaticResource BooleanToBrushConverter}}"
+                    Height="30" 
+                    Margin="2">
+                        <TextBlock Text="{Binding Day}" 
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Center" 
+                           FontSize="16" Foreground="White" />
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Margin" Value="2" />
+                    <Style.Triggers>
+                        <!-- Highlight selected item -->
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="LightBlue" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
+                    
+            <!--Overview-->
+            <!--#region MEals Overview-->
+            <Border Grid.Row="1" Margin="5"
+                    BorderThickness="1" BorderBrush="LightGray" Padding="5">
+                
+                <Grid >
+                <Grid.RowDefinitions>
+                    <!-- Row for Days -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Rows for Meal Types -->
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+
+                    <Border Grid.Row="0" Margin="5" VerticalAlignment="Top" Height="50" 
+                            Grid.Column="0" Background="{StaticResource gridMealTypeLightBlue}">
+                    <TextBlock   Text="{Binding SelectedDay.Day}" VerticalAlignment="Center" 
+                                 Foreground="{StaticResource ClearText}" Grid.Row="1" FontWeight="Bold" HorizontalAlignment="Center"/>
+                </Border>
+
+                <Border Grid.Row="1" Margin="5" VerticalAlignment="Top" Height="30" Grid.Column="0" Background="{StaticResource gridMealTypeHeader}">
+                    <TextBlock   Text="Pequeno Almoço" VerticalAlignment="Center" Grid.Row="1" FontWeight="Bold" HorizontalAlignment="Center"/>
+                </Border>
+                    <Border Grid.Row="2"  Margin="5" VerticalAlignment="Top" Height="30" Grid.Column="0" Background="{StaticResource gridMealTypeHeader}">
+                    <TextBlock   Text="Meio da Manhã" VerticalAlignment="Center" Grid.Row="1" FontWeight="Bold" HorizontalAlignment="Center"/>
+                </Border>
+                    <Border Grid.Row="3"  Margin="5" VerticalAlignment="Top" Height="30" Grid.Column="0" Background="{StaticResource gridMealTypeHeader}">
+                    <TextBlock   Text="Almoço" VerticalAlignment="Center" Grid.Row="1" FontWeight="Bold" HorizontalAlignment="Center"/>
+                </Border>
+                    <Border Grid.Row="4"  Margin="5" VerticalAlignment="Top" Height="30" Grid.Column="0" Background="{StaticResource gridMealTypeHeader}">
+                    <TextBlock   Text="Lanche" VerticalAlignment="Center" Grid.Row="1" FontWeight="Bold" HorizontalAlignment="Center"/>
+                </Border>
+                    <Border Grid.Row="5"  Margin="5" VerticalAlignment="Top" Height="30" Grid.Column="0" Background="{StaticResource gridMealTypeHeader}">
+                    <TextBlock   Text="Jantar" VerticalAlignment="Center" Grid.Row="1" FontWeight="Bold" HorizontalAlignment="Center"/>
+                </Border>
+                    <Border Grid.Row="6"  Margin="5" VerticalAlignment="Top" Height="30" Grid.Column="0" Background="{StaticResource gridMealTypeHeader}">
+                    <TextBlock   Text="Ceia" VerticalAlignment="Center" Grid.Row="1" FontWeight="Bold" HorizontalAlignment="Center"/>
+                </Border>
+
+                <ItemsControl Grid.Row="1"  Margin="0,35,0,0"  Grid.Column="0"  ItemsSource="{Binding DaySummary.Breakfast}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" Foreground="{StaticResource ClearText}" HorizontalAlignment="Center" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                    <ItemsControl Grid.Row="2"  Margin="0,35,0,0"  Grid.Column="0"  ItemsSource="{Binding DaySummary.MidMorningSnack}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" Foreground="{StaticResource ClearText}" HorizontalAlignment="Center" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <ItemsControl Grid.Row="3"  Margin="0,35,0,0"  Grid.Column="0"  ItemsSource="{Binding DaySummary.Lunch}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" Foreground="{StaticResource ClearText}" HorizontalAlignment="Center" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <ItemsControl Grid.Row="4"  Margin="0,35,0,0"  Grid.Column="0"  ItemsSource="{Binding DaySummary.MiddleDaySnack}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" Foreground="{StaticResource ClearText}" HorizontalAlignment="Center" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <ItemsControl Grid.Row="5"  Margin="0,35,0,0"  Grid.Column="0"  ItemsSource="{Binding DaySummary.Dinner}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" Foreground="{StaticResource ClearText}" HorizontalAlignment="Center" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <ItemsControl Grid.Row="6"  Margin="0,35,0,0"  Grid.Column="0"  ItemsSource="{Binding DaySummary.BeforeBed}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" Foreground="{StaticResource ClearText}" HorizontalAlignment="Center" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+            </Grid>
+                <!--#endregion-->
+            </Border>
+
+        </Grid>
+
+
+        <!-- Meal Plans for Selected Day -->
+        <StackPanel Grid.Column="1" >
+            <TextBlock Text="Meal Plans" FontWeight="Bold" HorizontalAlignment="Center"
+                       Foreground="{StaticResource SecondaryTextColor}" FontSize="16" Margin="10"/>
+
+            <!-- MealType Dropdown -->
+            <StackPanel>
+                <TextBlock Text="MEAL TYPE" FontWeight="Bold" 
+                       Foreground="{StaticResource SecondaryTextColor}" 
+                           FontSize="13" Margin="10,0,0,2"
+                           HorizontalAlignment="Left"/>
+                <ComboBox ItemsSource="{Binding MealTypes}"
+                      SelectedItem="{Binding SelectedMealType}" 
+                      Margin="0,0,0,10"  />
+            
+            </StackPanel>
+            
+            
+            <!-- Products Dropdown -->
+            <StackPanel>
+                <TextBlock Text="ALL PRODUCTS" FontWeight="Bold" 
+                       Foreground="{StaticResource SecondaryTextColor}" 
+                           FontSize="13" Margin="10,0,0,2"
+                           HorizontalAlignment="Left"/>
+                <ComboBox ItemsSource="{Binding Products}" 
+                  SelectedItem="{Binding SelectedProduct}" 
+                  Margin="0,0,0,10" />
+
+            </StackPanel>
+            
+            <StackPanel Margin="0,0,0,10" Background="WhiteSmoke" >
+                <!-- Search TextBox -->
+                <TextBlock Text="FILTERED PRODUCTS" FontWeight="Bold" 
+                       Foreground="{StaticResource SecondaryTextColor}" 
+                           FontSize="10" Margin="10,0,0,2"
+                           HorizontalAlignment="Left"/>
+                <Grid >
+                    
+                    <TextBox Name="SearchTextBox"
+                                Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" 
+                                Margin="5" VerticalContentAlignment="Center" Height="30"/>
+                    <TextBlock Text="Search Product .." 
+                       IsHitTestVisible="False" 
+                       Foreground="Gray" FontSize="10"
+                       VerticalAlignment="Center" HorizontalAlignment="Center"
+                       Margin="5" 
+                       Visibility="{Binding Text, ElementName=SearchTextBox, Converter={StaticResource StringToVisibilityConverter}}" />
+                </Grid>
+
+                <!-- Products Dropdown -->
+                <StackPanel>
+                    <Expander Header="Filterer Products" Margin="10" 
+                              Background="{StaticResource PrimaryBackground}" 
+                              Padding="5"
+                              Foreground="White" VerticalContentAlignment="Center"
+                              IsExpanded="{Binding Text, ElementName=SearchTextBox, Converter={StaticResource StringToBoolConverter}}" >
+                        <ListBox ItemsSource="{Binding FilteredProducts}" Margin="0,5,0,0" 
+                                 SelectedItem="{Binding SelectedProduct}"  />
+                    </Expander>
+                       
+                </StackPanel>
+
+            <!-- Add and Remove Buttons -->
+            <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                <Button Content="Add Product" Grid.Column="0" Height="30"
+                        Command="{Binding AddProductCommand}" Margin="5" Background="{StaticResource PrimaryBackground}"
+                        Foreground="White" FontWeight="Bold"/>
+                    <Button Content="Remove Product" Grid.Column="1" Background="{StaticResource gridMealTypeLightBlue}"
+                       Foreground="White"  FontWeight="Bold" Command="{Binding RemoveProductCommand}" Margin="5"/>
+            </Grid>
+
+            </StackPanel>
+            <!-- Display Meal Plans -->
+            <StackPanel Margin="5">
+                <DataGrid ItemsSource="{Binding SelectedDay.MealPlans, UpdateSourceTrigger=PropertyChanged}" 
+                            AutoGenerateColumns="False"
+                            SelectedItem="{Binding SelectedMealPlan, Mode=TwoWay}" 
+                            Margin="5"
+                            CanUserAddRows="False"
+                            CanUserDeleteRows="False" 
+                            IsReadOnly="False"
+                            HeadersVisibility="Column">
+                    <!-- Define Columns -->
+                    <DataGrid.Columns>
+                        <!-- Product Name -->
+                        <DataGridTextColumn Header="Product Name" 
+                            Binding="{Binding ProductName}" 
+                            IsReadOnly="True" 
+                            Width="200">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <!-- Meal Type -->
+                        <DataGridTemplateColumn Header="Meal Type" Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <!-- Read-only mode -->
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding MealType}" HorizontalAlignment="Center" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                            <DataGridTemplateColumn.CellEditingTemplate>
+                                <!-- Edit mode -->
+                                <DataTemplate>
+                                    <ComboBox ItemsSource="{Binding DataContext.MealTypes, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                 SelectedItem="{Binding MealType, UpdateSourceTrigger=PropertyChanged}"
+                                                 HorizontalAlignment="Stretch" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellEditingTemplate>
+                        </DataGridTemplateColumn>
+
+                        <!-- Grams -->
+                        <DataGridTextColumn Header="Grams" 
+                            Binding="{Binding Grams, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,Delay=500}" 
+                            Width="*">
+                            <!-- Style for Display Mode -->
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                            <!-- Style for Edit Mode -->
+                            <DataGridTextColumn.EditingElementStyle>
+                                <Style TargetType="TextBox">
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                    <Setter Property="Background" Value="LightGray"/>
+                                    <!-- Background for editing -->
+                                    <Setter Property="Foreground" Value="Black"/>
+                                    <!-- Ensure text is black in edit mode -->
+                                </Style>
+                            </DataGridTextColumn.EditingElementStyle>
+
+                            <!-- Style for the Cell -->
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <!-- Default background and foreground -->
+                                    <Setter Property="Background" Value="LightGray"/>
+                                    <Setter Property="Foreground" Value="Black"/>
+
+                                    <!-- Triggers to handle selection -->
+                                    <Style.Triggers>
+                                        <!-- Change foreground to black when selected -->
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Foreground" Value="Black"/>
+                                        </Trigger>
+                                        <!-- Optionally change background when selected -->
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="LightGray"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+
+                        <!-- Protein -->
+                        <DataGridTextColumn Header="Protein" 
+                            Binding="{Binding Protein, Mode=OneWay}" 
+                            IsReadOnly="True" 
+                            Width="*">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <!-- Carbs -->
+                        <DataGridTextColumn Header="Carbs" 
+                            Binding="{Binding Carbs, Mode=OneWay}" 
+                            IsReadOnly="True" 
+                            Width="*">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <!-- Fat -->
+                        <DataGridTextColumn Header="Fat" 
+                            Binding="{Binding Fat, Mode=OneWay}" 
+                            IsReadOnly="True" 
+                            Width="*">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <!-- Calories -->
+                        <DataGridTextColumn Header="Calories" 
+                            Binding="{Binding Calories, Mode=OneWay}" 
+                            IsReadOnly="True" 
+                            Width="*">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+            </StackPanel>
+            
+            
+        </StackPanel>
+
+
+        <!-- Totals Section -->
+        <Border Grid.Column="1" VerticalAlignment="Bottom" Background="{StaticResource PrimaryBackground}"
+                BorderBrush="#ccc" BorderThickness="1" Margin="0,10,0,0" Padding="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                
+                    
+                <TextBlock Grid.Row="0" Foreground="White"  Text="TOTAL Carbs:" Grid.Column="0" FontWeight="Bold" />
+                <TextBox Grid.Row="0"  Text="{Binding TotalCarbs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                         Grid.Column="1" IsReadOnly="True" FontWeight="Bold"
+                 Background="{Binding IsCarbsWithinRange, Converter={StaticResource RangeToColorConverter}}" />
+                <TextBlock Text="   /   " Grid.Row="0" FontWeight="Bold" Foreground="White" Grid.Column="2"/>
+                <TextBlock Text="{Binding DailyCarbs}" FontWeight="Bold" Foreground="White" Grid.Row="0" Grid.Column="3"/>
+
+                <TextBlock Grid.Row="1" Foreground="White" Text="TOTAL Fat:" Grid.Column="0" Margin="0,0,0,0" FontWeight="Bold" />
+                <TextBox Grid.Row="1" FontWeight="Bold"  Text="{Binding TotalFat, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" IsReadOnly="True"
+                 Background="{Binding IsFatWithinRange, Converter={StaticResource RangeToColorConverter}}" />
+                <TextBlock Text="   /   " Grid.Row="1" FontWeight="Bold" Foreground="White" Grid.Column="2"/>
+                <TextBlock Text="{Binding DailyFat}" FontWeight="Bold" Foreground="White" Grid.Row="1" Grid.Column="3"/>
+
+                <TextBlock Grid.Row="2" Foreground="White" Text="TOTAL Protein:" Grid.Column="0" Margin="0,0,0,0" FontWeight="Bold" />
+                <TextBox Grid.Row="2" FontWeight="Bold" Text="{Binding TotalProtein, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" IsReadOnly="True"
+                 Background="{Binding IsProteinWithinRange, Converter={StaticResource RangeToColorConverter}}" />
+                <TextBlock Text="   /   " Foreground="White" FontWeight="Bold" Grid.Row="2" Grid.Column="2"/>
+                <TextBlock Text="{Binding DailyProtein}" FontWeight="Bold" Foreground="White" Grid.Row="2" Grid.Column="3"/>
+
+
+                <TextBlock Grid.Row="3" Foreground="White" Text="TOTAL Calories:" Grid.Column="0" Margin="0,0,0,0" FontWeight="Bold" />
+                <TextBlock Grid.Row="3" Foreground="White" FontWeight="Bold" Text="{Binding TotalCalories}" Grid.Column="1" Margin="0,0,0,0" />
+            </Grid>
+        </Border>
+    </Grid>
+
+</UserControl>

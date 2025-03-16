@@ -1,0 +1,24 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--Background Colors-->
+    <Color x:Key="ada">#0d0d0d</Color>
+    <SolidColorBrush x:Key="PrimaryBackground">#003049</SolidColorBrush>
+    <SolidColorBrush x:Key="SecondayBackground">#FDF0D5</SolidColorBrush>
+    <SolidColorBrush x:Key="ThirdBackground">#669BBC</SolidColorBrush>
+    
+    <!--Background Colors-->
+    <SolidColorBrush x:Key="subSectionGrid">#262525</SolidColorBrush>
+
+
+    <!--Background Palette-->
+    <SolidColorBrush x:Key="gridHeader" Color="#224ea1"/>
+    <SolidColorBrush x:Key="gridMealTypeHeader" Color="#669BBC"/>
+    <SolidColorBrush x:Key="gridMealTypeLightBlue" Color="#780000"/>
+    <SolidColorBrush x:Key="gridHeaderForeground" Color="White"/>
+
+    <SolidColorBrush x:Key="LisbBoxBackground" Color="#003049"/>
+    
+    <!--Foreground-->
+    <SolidColorBrush x:Key="ClearText" Color="#FDF0D5"/>
+    <SolidColorBrush x:Key="SecondaryTextColor" Color="#003049"/>
+</ResourceDictionary>

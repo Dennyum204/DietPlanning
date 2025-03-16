@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ConverterClass="clr-namespace:Resources.Converters">
+
+
+    <ConverterClass:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
+    <ConverterClass:NullToBooleanConverter x:Key="NullToBooleanConverter" />
+    <ConverterClass:RangeToColorConverter x:Key="RangeToColorConverter" />
+    <ConverterClass:DoubleToStringConverter x:Key="DoubleToStringConverter" />
+    <ConverterClass:BooleanToBrushConverter x:Key="BooleanToBrushConverter" />
+    <ConverterClass:StringToBoolConverter x:Key="StringToBoolConverter" />
+   
+
+</ResourceDictionary>
